@@ -1,11 +1,15 @@
 const express = require("express");
-require('dotenv').config()
+const bodyParser = require('bpdy-parser');
+const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+require('dotenv').config()
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.djg6r.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 
 
 const app = express();
+app.use(bodyParser());
+app.use(cors())
 const port = 5000;
 
 
@@ -13,7 +17,14 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 client.connect(err => {
   const collection = client.db("emaJohnStore").collection("products");
   // perform actions on the collection object
-  console.log("Database Connected")
+//   console.log("Database Connected")
+    app.post('/addProduct',(req,res)=>{
+        const product = req.body;
+        products.insertOne(product)
+        .then(result => {
+            console.log(result)
+        })
+    })
 });
 
 
