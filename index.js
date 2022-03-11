@@ -74,6 +74,6 @@ app.get('/',(req,res)=>{
     res.send('Hello Mongo')
 })
 
-app.listen(port);
+app.listen(process.env.PORT || port);
 
 
